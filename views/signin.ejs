@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head.ejs") %>
+    <title>Signup | WE.BLOG</title>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <div class="card p-4 shadow-sm">
+        <h2 class="mb-4">Create Your Account</h2>
+        <form action="/api/user/signin" method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              required
+              placeholder="Enter your full name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              name="email"
+              required
+              placeholder="example@gmail.com"
+            />
+            <div id="emailHelp" class="form-text">
+              We'll never share your email with anyone else.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              id="password"
+              required
+              placeholder="Enter a secure password"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+      </div>
+    </div>
+    <%- include("./partials/scripts.ejs") %>
+  </body>
+</html>
