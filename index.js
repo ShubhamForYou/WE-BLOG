@@ -6,6 +6,11 @@ const env = require("dotenv").config();
 const connectDB = require("./connectDB");
 const staticRoute = require("./routes/staticRoutes");
 const userRoute = require("./routes/user");
+const blogRoute = require("./routes/blog");
+const cookieParser = require("cookie-parser");
+const checkForAuthenticationCookie = require("./middlewares/authentication");
+const cloudinary = require("cloudinary").v2;
+const blogModel = require("./models/blog");
 
 // set view engine
 app.set("view engine", "ejs");
@@ -19,17 +24,29 @@ connectDB(process.env.DB_LOCAL_URL)
   .catch((err) => {
     console.log(err);
   });
+// config cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(checkForAuthenticationCookie);
 
 // routes
-app.get("/", (req, res) => {
-  res.render("home");
+app.get("/", async (req, res) => {
+  const allBlogs = await blogModel.find({}).sort("createdAt");
+  res.render("home", { user: req.user,
+    blogs:allBlogs
+   });
 });
 app.use("/", staticRoute);
 app.use("/api/user", userRoute);
+app.use("/blog", blogRoute);
 
 // server listening on PORT
 app.listen(process.env.PORT, () => {

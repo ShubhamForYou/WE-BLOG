@@ -5,10 +5,15 @@
     <title>Signup | WE.BLOG</title>
   </head>
   <body>
+    <%- include("./partials/navbar.ejs") %>
     <div class="container mt-4">
       <div class="card p-4 shadow-sm">
         <h2 class="mb-4">Create Your Account</h2>
-        <form action="/api/user/signin" method="post">
+        <form
+          action="/api/user/signin"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="mb-3">
             <label for="name" class="form-label">Full Name</label>
             <input
@@ -45,6 +50,21 @@
               required
               placeholder="Enter a secure password"
             />
+          </div>
+          <div class="mb-3">
+            <label for="profileImageURL" class="form-label"
+              >Profile Image</label
+            >
+            <input
+              type="file"
+              name="profileImageURL"
+              class="form-control"
+              id="profileImageURL"
+              accept="image/*"
+            />
+            <div id="profileImageHelp" class="form-text">
+              Upload a profile picture (optional).
+            </div>
           </div>
           <button type="submit" class="btn btn-primary w-100">Sign Up</button>
         </form>

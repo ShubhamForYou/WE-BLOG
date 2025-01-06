@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head") %>
+    <title>ADD NEW BLOG</title>
+  </head>
+  <body class="bg-light">
+    <%- include("./partials/navbar") %>
+
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h2 class="card-title text-center mb-4">Add New Blog</h2>
+              <form
+                action="/blog/add-new-blog"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    placeholder="Enter blog title"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="body" class="form-label">Body</label>
+                  <textarea
+                    class="form-control"
+                    id="body"
+                    rows="5"
+                    name="body"
+                    placeholder="Write your blog content here"
+                    required
+                  ></textarea>
+                </div>
+                <div class="mb-4">
+                  <label for="coverImageURL" class="form-label"
+                    >Cover Image</label
+                  >
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="coverImageURL"
+                    name="coverImageURL"
+                    accept="image/*"
+                  />
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include("./partials/scripts") %>
+  </body>
+</html>

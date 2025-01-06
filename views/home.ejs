@@ -2,12 +2,33 @@
 <html lang="en">
   <head>
     <%- include("./partials/head") %>
-
     <title>HOME PAGE</title>
   </head>
   <body>
-    <%- include("./partials/navbar") %>
-    <p>home</p>
-    <%- include("./partials/scripts") %>
+    <%- include("./partials/navbar") %> <% blogs.forEach(element => { %>
+    <div class="container mt-3">
+      <div class="card" style="width: 18rem">
+        <!-- Blog Cover Image -->
+        <img
+          src="<%= element.coverImageURL %>"
+          class="card-img-top"
+          alt="Blog Cover Image"
+        />
+        <div class="card-body">
+          <!-- Blog Title -->
+          <h5 class="card-title text-uppercase"><%= element.title %></h5>
+          <!-- View Button -->
+          <a href="/blog/<%= element._id %>" class="btn btn-primary">View</a>
+        </div>
+        <!-- Time and Date -->
+        <div class="text-muted text-center small mt-2">
+          <%= new Date(element.createdAt).toLocaleDateString("en-US", { year:
+          "numeric", month: "long", day: "numeric", }) %> at <%= new
+          Date(element.createdAt).toLocaleTimeString("en-US", { hour: "2-digit",
+          minute: "2-digit", }) %>
+        </div>
+      </div>
+    </div>
+    <% }) %> <%- include("./partials/scripts") %>
   </body>
 </html>

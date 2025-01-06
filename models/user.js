@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const asyncHandler = require("express-async-handler");
+const { createTokenForUser } = require("../services/authentication");
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -38,21 +38,17 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.static("matchPassword", async function (email, password) {
-  const user = await this.findOne({ email });
-  if (!user) throw new Error("user not found");
-  if (await bcrypt.compare(password, user.password)) {
-    return {
-      name: user.name,
-      role: user.role,
-      email: user.email,
-      userID: user.id,
-    };
-  } else {
-    res.status(401);
-    throw new Error("incorrect password or email");
+userSchema.static(
+  "matchPasswordAndGenerateToken",
+  async function (email, password) {
+    const user = await this.findOne({ email });
+    if (!user) throw new Error("user not found");
+    if (await bcrypt.compare(password, user.password)) {
+      const token = createTokenForUser(user);
+      return token;
+    }
   }
-});
+);
 const userModel = mongoose.model("user", userSchema);
 
 module.exports = userModel;
